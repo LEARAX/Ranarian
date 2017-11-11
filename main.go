@@ -6,6 +6,8 @@ import (
   "os"
   "os/signal"
   "syscall"
+  "io"
+  "encoding/json"
 
   "github.com/bwmarrin/discordgo"
 )
