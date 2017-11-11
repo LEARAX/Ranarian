@@ -8,7 +8,7 @@ Functions/properties of this bot will be listed below as they are added.
 To build Ranarian, run the following in your favorite shell:
 ```sh
 go get github.com/bwmarrin/discordgo
-go build -o Ranarian main.go
+go build -o ranarian main.go
 ```
 
 To run Ranarian, execute `./Ranarian -t <TOKEN>` with a token from [the discord developer page](https://discordapp.com/developers/applications/me).
