@@ -11,4 +11,4 @@ go get github.com/bwmarrin/discordgo
 go build -o Ranarian main.go
 ```
 
-To run Ranarian, execute `./Ranarian -t <TOKEN>` with a token from (the discord developer page)[https://discordapp.com/developers/applications/me].
+To run Ranarian, execute `./Ranarian -t <TOKEN>` with a token from [the discord developer page](https://discordapp.com/developers/applications/me).
