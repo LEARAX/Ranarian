@@ -11,4 +11,10 @@ go get github.com/bwmarrin/discordgo
 go build -o ranarian main.go
 ```
 
-To run Ranarian, execute `./Ranarian -t <TOKEN>` with a token from [the discord developer page](https://discordapp.com/developers/applications/me).
+Then create a file in the same directory named `secrets.json`, with the following structure:
+```json
+{
+  "token": "YOURTOKENHERE"
+}```
+
+Replace `YOURTOKENHERE` with a token from the [discord developer page](https://discordapp.com/developers/applications/me).

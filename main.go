@@ -17,10 +17,6 @@ var (
   Token string
 )
 
-func init() {
-  flag.StringVar(&Token, "t", "", "Bot Token")
-  flag.Parse()
-}
 
 func main() {
   // Create a new Discord session using the provided bot token.
