@@ -12,18 +12,14 @@ import (
   "github.com/bwmarrin/discordgo"
 )
 
-// Variables used for command line parameters
-var (
-  Token string
-)
-
+var Token string
 
 func main() {
   // Create a new Discord session using the provided bot token.
   dg, err := discordgo.New("Bot " + Token)
   if err != nil {
-    fmt.Println("error creating Discord session,", err)
-    return
+    fmt.Println("Error creating Discord session:", err)
+    return 1
   }
 
   // Register the messageCreate func as a callback for MessageCreate events.
@@ -32,8 +28,8 @@ func main() {
   // Open a websocket connection to Discord and begin listening.
   err = dg.Open()
   if err != nil {
-    fmt.Println("error opening connection,", err)
-    return
+    fmt.Println("Error opening connection: ", err)
+    return 1
   }
 
   // Wait here until CTRL-C or other term signal is received.
@@ -42,7 +38,6 @@ func main() {
   signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
   <-sc
 
-  // Cleanly close down the Discord session.
   dg.Close()
 }
 
