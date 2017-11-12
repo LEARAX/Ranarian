@@ -7,8 +7,8 @@ Functions/properties of this bot will be listed below as they are added.
 ## Executing
 To build Ranarian, run the following in your favorite shell:
 ```sh
-go get github.com/bwmarrin/discordgo
-go build -o ranarian main.go
+make install-deps
+make
 ```
 
 Then create a file in the same directory named `secrets.json`, with the following structure:
