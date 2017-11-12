@@ -20,15 +20,13 @@ var config struct {
 func main() {
   file, err := ioutil.ReadFile("./secrets.json")
   if err != nil {
-    log.Fatal("Error creating Discord session: ", err)
+    log.Fatal("Error reading config file: ", err)
   }
 
-
-
-
-  json.Unmarshal(file, &config)
-  fmt.Println(config)
-
+  err := json.Unmarshal(file, &config)
+  if err != nil {
+    log.Fatal("Error parsing config: ", err)
+  }
 
   dg, err := discordgo.New("Bot " + config.Token)
   if err != nil {
