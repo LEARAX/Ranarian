@@ -3,7 +3,6 @@ package main
 import (
   "fmt"
   "os"
-  "log"
   "os/signal"
   "syscall"
   "io/ioutil"
@@ -20,24 +19,24 @@ var config struct {
 func main() {
   file, err := ioutil.ReadFile("./secrets.json")
   if err != nil {
-    log.Fatal("Error reading config file: ", err)
+    print("Error reading config file: ", err)
+    os.Exit(1)
   }
 
-  err := json.Unmarshal(file, &config)
-  if err != nil {
-    log.Fatal("Error parsing config: ", err)
-  }
+  json.Unmarshal(file, &config)
 
   dg, err := discordgo.New("Bot " + config.Token)
   if err != nil {
-    log.Fatal("Error creating Discord session: ", err)
+    print("Error creating Discord session: ", err)
+    os.Exit(1)
   }
 
   dg.AddHandler(messageCreated)
 
   err = dg.Open()
   if err != nil {
-    log.Fatal("Error opening connection: ", err)
+    print("Error opening connection: ", err)
+    os.Exit(1)
   }
 
   fmt.Println("CONNECTION ESTABLISHED")
