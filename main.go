@@ -33,7 +33,7 @@ func main() {
     log.Fatal("Error creating Discord session: ", err)
   }
 
-  dg.AddHandler(messageCreate)
+  dg.AddHandler(messageCreated)
 
   err = dg.Open()
   if err != nil {
@@ -50,7 +50,7 @@ func main() {
 
 // This function will be called (due to AddHandler above) every time a new
 // message is created on any channel that the autenticated bot has access to.
-func messageCreate(session *discordgo.Session, msg *discordgo.MessageCreate) {
+func messageCreated(session *discordgo.Session, msg *discordgo.MessageCreate) {
   if msg.Author.ID == session.State.User.ID {
     return
   }
