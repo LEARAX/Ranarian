@@ -1,39 +1,48 @@
 package main
 
 import (
-  "flag"
   "fmt"
   "os"
+  "log"
   "os/signal"
   "syscall"
-  "io"
+  "io/ioutil"
   "encoding/json"
 
   "github.com/bwmarrin/discordgo"
 )
 
-var Token string
+var config struct {
+  Token string
+}
+
 
 func main() {
-  // Create a new Discord session using the provided bot token.
-  dg, err := discordgo.New("Bot " + Token)
+  file, err := ioutil.ReadFile("./secrets.json")
   if err != nil {
-    fmt.Println("Error creating Discord session:", err)
-    return 1
+    log.Fatal("Error creating Discord session: ", err)
   }
 
-  // Register the messageCreate func as a callback for MessageCreate events.
+
+
+
+  json.Unmarshal(file, &config)
+  fmt.Println(config)
+
+
+  dg, err := discordgo.New("Bot " + config.Token)
+  if err != nil {
+    log.Fatal("Error creating Discord session: ", err)
+  }
+
   dg.AddHandler(messageCreate)
 
-  // Open a websocket connection to Discord and begin listening.
   err = dg.Open()
   if err != nil {
-    fmt.Println("Error opening connection: ", err)
-    return 1
+    log.Fatal("Error opening connection: ", err)
   }
 
-  // Wait here until CTRL-C or other term signal is received.
-  fmt.Println("Ranarian online!")
+  fmt.Println("CONNECTION ESTABLISHED")
   sc := make(chan os.Signal, 1)
   signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
   <-sc
@@ -43,19 +52,16 @@ func main() {
 
 // This function will be called (due to AddHandler above) every time a new
 // message is created on any channel that the autenticated bot has access to.
-func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-  // Ignore all messages created by the bot itself
-  // This isn't required in this specific example but it's a good practice.
-  if m.Author.ID == s.State.User.ID {
+func messageCreate(session *discordgo.Session, msg *discordgo.MessageCreate) {
+  if msg.Author.ID == session.State.User.ID {
     return
   }
-  // If the message is "ping" reply with "Pong!"
-  if m.Content == "ping" {
-    s.ChannelMessageSend(m.ChannelID, "Pong!")
+
+  if msg.Content == "ping" {
+    session.ChannelMessageSend(msg.ChannelID, "Pong!")
   }
 
-  // If the message is "pong" reply with "Ping!"
-  if m.Content == "pong" {
-    s.ChannelMessageSend(m.ChannelID, "Ping!")
+  if msg.Content == "pong" {
+    session.ChannelMessageSend(msg.ChannelID, "Ping!")
   }
 }
