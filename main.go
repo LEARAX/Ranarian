@@ -5,9 +5,9 @@ import (
   "os"
   "os/signal"
   "syscall"
+  "strings"
   "io/ioutil"
   "encoding/json"
-
   "github.com/bwmarrin/discordgo"
 )
 
@@ -54,11 +54,12 @@ func messageCreated(session *discordgo.Session, msg *discordgo.MessageCreate) {
     return
   }
 
-  if msg.Content == "ping" {
-    session.ChannelMessageSend(msg.ChannelID, "Pong!")
-  }
+  if strings.HasPrefix(msg.Content, ">") {
+    req := msg.Content[1:]
+    fmt.Println("Command detected: " + req)
 
-  if msg.Content == "pong" {
-    session.ChannelMessageSend(msg.ChannelID, "Ping!")
+    if strings.HasPrefix(req, "mute") {
+      fmt.Println("Muting user: ")
+    }
   }
 }
