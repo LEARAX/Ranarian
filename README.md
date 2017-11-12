@@ -15,6 +15,7 @@ Then create a file in the same directory named `secrets.json`, with the followin
 ```json
 {
   "token": "YOURTOKENHERE"
-}```
+}
+```
 
 Replace `YOURTOKENHERE` with a token from the [discord developer page](https://discordapp.com/developers/applications/me).
