@@ -2,5 +2,6 @@ extern crate serenity;
 
 
 fn main() {
-  print!("Hello")
+    let alpha = "5";
+    println!("{}", alpha)
 }
