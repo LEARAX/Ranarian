@@ -1,6 +1,6 @@
 [root]
-name = "anexo"
-version = "0.1.0"
+name = "teleplasm"
+version = "0.1.2"
 dependencies = [
  "serenity 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

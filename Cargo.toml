@@ -1,6 +1,6 @@
 [package]
-name = "anexo"
-version = "0.1.0"
+name = "teleplasm"
+version = "0.1.2"
 authors = ["LEARAX57H <willculhane3@gmail.com>"]
 
 [dependencies]
