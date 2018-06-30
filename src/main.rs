@@ -12,27 +12,27 @@ struct Handler {
 impl EventHandler for Handler {
     fn on_message(&self, ctx: Context, msg: Message) {
         if msg.content == "!messageme" {
-            if let Err(err) = msg.author.dm(|m| m.content("Hello!")) {
-                println!("Error: Direct messaging user \"{:?}\" failed.", err);
+            if let Err(why) = msg.author.dm(|m| m.content("Hello!")) {
+                println!("Error when direct messaging user: {:?}", why);
             }
         }
         if &msg.content[..5] == "!play" {
             let url = &msg.content[6..];
-            println!("User has requested {}", url);
+            println!("playing {}", url);
             match ctx.shard.lock().manager.get(self.target_voice_channel.0) {
                 Some(handler) => {
                     match voice::ytdl(url) {
                         Ok(source) => {
-                            println!("Now playing video from {:?}...", url);
+                            println!("ok");
                             handler.play(source);
                         },
                         Err(err) => {
-                            println!("Error: Invalid video: {:?}", err);
+                            println!("Error with source: {:?}", err);
                         }
                     }
                 },
                 None => {
-                    println!("Error: Not in a voice channel");
+                    println!("Not in a voice channel, can't play audio");
                 }
             }
         }
@@ -61,7 +61,7 @@ fn main() {
                               )
     });
 
-    if let Err(err) = client.start() {
-        println!("Error intializing client: {:?}", err);
+    if let Err(why) = client.start() {
+        println!("Client error: {:?}", why);
     }
 }
